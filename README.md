@@ -36,6 +36,9 @@ In Claude Code, you can explicitly invoke the plugin skill with `/typesafe:types
 | Skill | Purpose |
 |---|---|
 | [typesafe-ai](skills/typesafe-ai/SKILL.md) | Design TypeSafe workflows, find current docs and cookbooks, and compose typed judgments in code |
+| [jev-pi-specialist](skills/jev-pi-specialist/SKILL.md) | Rules-first Jev tool gate for Pi, two-pass skill suggestion, labeled threshold training |
+
+Pi coding agent: load the extension at [extensions/jev-pi-specialist](extensions/jev-pi-specialist) (`pi -e ./extensions/jev-pi-specialist`). It gates unvouched `bash` / `write` / `edit` with code first, then Jev. `TYPESAFE_API_KEY` is required; missing key fails closed.
 
 ## License
 

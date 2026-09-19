@@ -1,0 +1,30 @@
+[
+  {
+    "name": "typesafe-ai",
+    "category": "ai",
+    "description": "TypeSafe/Jev: Choice/Noul/Score in code, not TS types. System One judgments.",
+    "description_full": "Build AI-powered software with TypeSafe System One models (Jev): Choice, Noul, and Score judgments composed in code. Not for TypeScript/Java/Rust static types, Zod, Pydantic, mypy, or JSON Schema.",
+    "body": "# Build with TypeSafe\n\nRead live docs. Keep rules in code. Ask independent questions in one request. Always include none/other on Choice.\n"
+  },
+  {
+    "name": "pptx",
+    "category": "office",
+    "description": "Create, read, edit .pptx decks, slides, notes, templates.",
+    "description_full": "Create, read, and edit PowerPoint .pptx files, including slides, notes, and templates.",
+    "body": "# pptx\n\nUse python-pptx or similar to edit existing decks and author new ones when asked to work with .pptx files.\n"
+  },
+  {
+    "name": "xlsx",
+    "category": "office",
+    "description": "Create, read, edit .xlsx spreadsheets, formulas, charts.",
+    "description_full": "Create, read, and edit Excel .xlsx workbooks, formulas, and charts.",
+    "body": "# xlsx\n\nUse openpyxl to manipulate spreadsheets. Do not invent cell values; copy from source.\n"
+  },
+  {
+    "name": "computer-use",
+    "category": "desktop",
+    "description": "Drive the user's desktop in the background — clicking, typing.",
+    "description_full": "Drive the user's desktop: click, type, and screenshot GUI apps when no CLI exists.",
+    "body": "# computer-use\n\nOnly when a GUI is required. Prefer CLI tools when they exist.\n"
+  }
+]
