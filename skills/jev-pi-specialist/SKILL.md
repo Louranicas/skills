@@ -41,8 +41,6 @@ Labeled fixtures in `extensions/jev-pi-specialist/fixtures/tool-gate.json`.
 15-repeat only near-threshold items. Log raw probabilities. Do not promote
 an untested threshold.
 
-## Extract / ingest
+## Extract
 
 - Extract spans: find in code, Choice+none, copy verbatim.
-- Corpus ingest: injection Noul >= 0.7 drops. Contradict@0.7 is not a
-  standing auto-flag.
