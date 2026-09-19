@@ -32,8 +32,7 @@ Fan-out independent questions in one request. Always include none/other on Choic
 ## Skill suggestion
 
 Two-pass, ignorable: rank the roster + need-skill Nouls, then re-read the
-top 3. Mean of four gates (threshold 0.30); invert `prose_suffices` only.
-The fourth gate `design_or_implement_typesafe` is not inverted.
+top 3. Mean of three gates (threshold 0.30); invert `prose_suffices` only.
 
 ## Training
 
