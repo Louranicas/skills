@@ -2,15 +2,15 @@
 name: typesafe-ai
 license: MIT
 description: >
-  Build AI-powered software with TypeSafe: small units of AI intelligence you
-  can use like programming primitives. Its System One models, including Jev,
-  turn natural language and application state into typed judgments and
-  probabilities that code can combine. Use when a feature needs programmable
-  common sense, when brainstorming what AI could make possible in an app, or
-  when an LLM prompt-and-parse step could become a structured decision.
-  Applications include routing, ranking, extraction, verification, and
-  interactive experiences; these are starting points, not the limits.
-  Read live docs and cookbooks to find useful patterns and discover new combinations.
+  TypeSafe/Jev: Choice/Noul/Score in code, not TS types. System One
+  models turn natural language and application state into probabilities
+  that software can compose. Use when building routing, ranking,
+  extraction, verification, or replacing an LLM prompt-and-parse step
+  with structured decisions; also when brainstorming what TypeSafe could
+  make possible. Do not use for TypeScript/Java/Rust static types,
+  Zod/Pydantic/mypy/JSON Schema/protobuf codegen, or asking whether a
+  data pipeline is "type-safe". Read live docs and cookbooks for current
+  primitives, APIs, and patterns.
 ---
 
 # Build with TypeSafe
