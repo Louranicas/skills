@@ -26,7 +26,7 @@ Set `TYPESAFE_API_KEY`. The extension never prints it.
 
 Two passes, cookbook shape, suggestion ignorable:
 
-1. Choice over roster index lines plus four need-skill Nouls (mean, `prose_suffices` inverted, `design_or_implement_typesafe` not inverted, threshold 0.30).
+1. Choice over roster index lines plus three need-skill Nouls (mean, `prose_suffices` inverted, threshold 0.30).
 2. Top-3 with full description + 700-char body; per-candidate `fits` Nouls (max < 0.30 → nothing).
 
 ## Training

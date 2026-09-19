@@ -4,9 +4,6 @@
  * Pass 1: Choice over roster index lines + need-skill Nouls (fan-out).
  * Pass 2: Choice over top-3 with full description + body excerpt + per-candidate
  * fits Nouls. Either pass may return nothing. Suggestion is ignorable.
- *
- * Fourth gate `design_or_implement_typesafe` is averaged with the three
- * cookbook Nouls and is NOT inverted.
  */
 
 import type { SkillRecord, SuggestResult } from "./types.ts";
@@ -24,8 +21,6 @@ export const GATE_QUESTIONS: Record<string, string> = {
     "Would a careful expert answering this consult a specific documented procedure or set of commands, rather than answering from general understanding?",
   prose_suffices:
     "Could a knowledgeable generalist fully satisfy this request in prose, with no tools, no documentation, and no access to the user's files or accounts?",
-  design_or_implement_typesafe:
-    "Is the user asking to design or implement a TypeSafe/Jev (System One) workflow in code, rather than only to write ordinary typed programs or to hear an explanation?",
 };
 
 export const INVERTED = new Set(["prose_suffices"]);

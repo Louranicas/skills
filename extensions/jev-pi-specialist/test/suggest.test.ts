@@ -34,21 +34,19 @@ describe("two-pass skill suggestion", () => {
       acts_on_user_system: 0.9,
       would_follow_documented_procedure: 0.9,
       prose_suffices: 0.9,
-      design_or_implement_typesafe: 0.9,
     });
-    // 0.9, 0.9, (1-0.9)=0.1, 0.9 → 0.7
-    assert.ok(Math.abs(mean - 0.7) < 1e-9);
+    // 0.9, 0.9, (1-0.9)=0.1 → 1.9/3
+    assert.ok(Math.abs(mean - 1.9 / 3) < 1e-9);
   });
 
-  it("does not invert the fourth design-or-implement gate", () => {
+  it("does not clear the gate on prose-suitable requests", () => {
     const mean = gateMean({
       acts_on_user_system: 0.2,
       would_follow_documented_procedure: 0.2,
       prose_suffices: 0.8,
-      design_or_implement_typesafe: 0.95,
     });
-    // 0.2, 0.2, 0.2, 0.95 → 0.3875, which is above 0.30
-    assert.ok(mean > GATE_THRESHOLD);
+    // 0.2, 0.2, (1-0.8)=0.2 → 0.2, which is below 0.30
+    assert.ok(mean < GATE_THRESHOLD);
   });
 
   it("stage-1 questions include none and every roster name", () => {
@@ -78,7 +76,6 @@ describe("two-pass skill suggestion", () => {
         acts_on_user_system: 0.1,
         would_follow_documented_procedure: 0.1,
         prose_suffices: 0.9,
-        design_or_implement_typesafe: 0.1,
       },
       raw: {},
     };
