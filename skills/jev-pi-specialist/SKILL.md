@@ -34,6 +34,12 @@ Fan-out independent questions in one request. Always include none/other on Choic
 Two-pass, ignorable: rank the roster + need-skill Nouls, then re-read the
 top 3. Mean of three gates (threshold 0.30); invert `prose_suffices` only.
 
+## Task / model router
+
+One Choice over `simple` / `jev_specialist` / `coding` / `ask` / `other`. Trivial work stays on a cheap lane. Do not spawn an advanced agent for it. See `extensions/jev-pi-specialist/src/router.ts`.
+
+Cookbook and deploy: `extensions/jev-pi-specialist/cookbooks/USE_CASES.md`, `extensions/jev-pi-specialist/docs/STACK_AND_DEPLOY.md`.
+
 ## Training
 
 Labeled fixtures in `extensions/jev-pi-specialist/fixtures/tool-gate.json`.

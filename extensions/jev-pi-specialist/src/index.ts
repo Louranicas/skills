@@ -7,6 +7,7 @@ import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { gateToolCall } from "./gate.ts";
 import { apiKeyFromEnv } from "./client.ts";
 import { suggestionBlock, suggestLive } from "./suggest.ts";
+import { routeBlock, routeLive } from "./router.ts";
 import type { SkillRecord, ToolCallInput, ToolName } from "./types.ts";
 
 const GATED: ReadonlySet<string> = new Set(["bash", "write", "edit"]);
@@ -100,40 +101,53 @@ export default function jevPiSpecialist(pi: ExtensionAPI): void {
   pi.on("before_agent_start", async (event, ctx) => {
     const key = apiKeyFromEnv();
     if (!key) return;
+    let extra = "";
+    try {
+      const route = await routeLive({ request: event.prompt, apiKey: key });
+      extra += routeBlock(route);
+      try {
+        pi.appendEntry("jev-route", { lane: route.lane, reason: route.reason, raw: route.raw });
+      } catch {
+        /* optional */
+      }
+    } catch {
+      /* routing is advisory */
+    }
     const skills = (event.systemPromptOptions?.skills ?? []) as Array<{
       name?: string;
       description?: string;
       content?: string;
     }>;
-    if (skills.length < 2) return;
-    const roster: SkillRecord[] = skills.map((s) => ({
-      name: String(s.name ?? ""),
-      description: String(s.description ?? ""),
-      description_full: String(s.description ?? ""),
-      body: String(s.content ?? "").slice(0, 1600),
-    }));
-    try {
-      const result = await suggestLive({
-        request: event.prompt,
-        roster,
-        apiKey: key,
-      });
-      return {
-        systemPrompt: event.systemPrompt + suggestionBlock(result.names),
-      };
-    } catch {
-      return;
+    if (skills.length >= 2) {
+      const roster: SkillRecord[] = skills.map((s) => ({
+        name: String(s.name ?? ""),
+        description: String(s.description ?? ""),
+        description_full: String(s.description ?? ""),
+        body: String(s.content ?? "").slice(0, 1600),
+      }));
+      try {
+        const result = await suggestLive({
+          request: event.prompt,
+          roster,
+          apiKey: key,
+        });
+        extra += suggestionBlock(result.names);
+      } catch {
+        /* suggestion is ignorable */
+      }
     }
+    if (!extra) return;
+    return { systemPrompt: event.systemPrompt + extra };
   });
 
   pi.registerCommand("jev-gate", {
-    description: "Show Jev tool-gate status",
+    description: "Show Jev tool-gate and router status",
     handler: async (_args, ctx) => {
       const key = apiKeyFromEnv();
       ctx.ui.notify(
         key
-          ? "Jev gate: TYPESAFE_API_KEY present; unvouched bash/write/edit are judged."
-          : "Jev gate: no TYPESAFE_API_KEY; unvouched calls fail closed.",
+          ? "Jev specialist: key present. Unvouched bash/write/edit are gated; each turn is routed (simple|jev_specialist|coding|ask)."
+          : "Jev specialist: no TYPESAFE_API_KEY; unvouched calls fail closed; router stays off.",
         key ? "info" : "warning",
       );
     },

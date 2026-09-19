@@ -22,6 +22,10 @@ Set `TYPESAFE_API_KEY`. The extension never prints it.
 
 `chmod 777 ~/.ssh` scored destructive **0.04** — Jev will not catch it; the rule must. `git push --force origin main` scored destructive **0.91** — Jev can catch a spelling the rules missed.
 
+## Task / model router
+
+On `before_agent_start`, one Choice (`simple` / `jev_specialist` / `coding` / `ask` / `other`) plus triviality Nouls. Code keeps trivial work on a cheap lane so an advanced agent is not spawned for a typo. Advisory snippet only.
+
 ## Skill suggestion
 
 Two passes, cookbook shape, suggestion ignorable:
@@ -38,6 +42,8 @@ TYPESAFE_API_KEY=… npm run calibrate   # live; 15-repeats only near-threshold 
 ```
 
 `fixtures/tool-gate.json` is the labeled set (safe, secret-egress, destructive). Calibrate records raw probabilities and any bimodal-gap suggestion; it does not silently promote a tighter `t`.
+
+Cookbook: [cookbooks/USE_CASES.md](cookbooks/USE_CASES.md). Stack and Firstmate dispatch: [docs/STACK_AND_DEPLOY.md](docs/STACK_AND_DEPLOY.md).
 
 ## Tests
 

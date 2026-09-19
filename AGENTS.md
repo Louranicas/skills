@@ -11,6 +11,7 @@ The Pi extension, two-pass skill suggestion, and labeled harness live in
 Offline tests: `cd extensions/jev-pi-specialist && npm test`.
 Live calibration: `TYPESAFE_API_KEY` set, never printed; `npm run calibrate`.
 Missing key fails closed on unvouched bash/write/edit. Rules run before Jev.
+Cookbook: `extensions/jev-pi-specialist/cookbooks/USE_CASES.md`. Deploy / Firstmate typed dispatch: `extensions/jev-pi-specialist/docs/STACK_AND_DEPLOY.md`.
 
 ## Maintaining this file
 
