@@ -34,7 +34,7 @@ function asToolCall(event: {
 }
 
 function lastUserText(ctx: {
-  sessionManager: { getEntries: () => Array<{ type?: string; message?: { role?: string; content?: unknown } }> };
+  sessionManager: { getEntries: () => Array<unknown> };
 }): string | undefined {
   try {
     const entries = ctx.sessionManager.getEntries();
