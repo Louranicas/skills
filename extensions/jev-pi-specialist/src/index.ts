@@ -1,14 +1,19 @@
 /**
- * Pi extension: rules-first Jev gate on unvouched bash/write/edit, plus
- * two-pass skill suggestion on before_agent_start.
+ * Pi extension: rules-first Jev gate, task router, skill suggestion,
+ * and a model-facing jev_ask tool (full System One access).
  */
 
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+import { Type } from "typebox";
 import { gateToolCall } from "./gate.ts";
 import { apiKeyFromEnv } from "./client.ts";
 import { suggestionBlock, suggestLive } from "./suggest.ts";
 import { routeBlock, routeLive } from "./router.ts";
+import { askJev, formatJevAskResult } from "./jev-tool.ts";
 import type { SkillRecord, ToolCallInput, ToolName } from "./types.ts";
+
+const JEV_TOOL_HINT =
+  "\n\n<jev_access>\nYou have the jev_ask tool: send `state` plus a `questions` object of Noul/Choice/Score specs in one call. Fan-out independent questions. Always include none/other on Choice. Jev does not generate text. Fail closed if the tool reports a missing TYPESAFE_API_KEY.\n</jev_access>";
 
 const GATED: ReadonlySet<string> = new Set(["bash", "write", "edit"]);
 
@@ -67,6 +72,45 @@ function lastUserText(ctx: {
 }
 
 export default function jevPiSpecialist(pi: ExtensionAPI): void {
+  pi.registerTool({
+    name: "jev_ask",
+    label: "Jev",
+    description:
+      "Ask TypeSafe Jev (System One) typed questions about a piece of state. Pass JSON `state` and a `questions` object of noul/choice/score specs. Fan-out many questions in one call. Always include none/other on Choice. Returns JSON answers and probabilities. Does not generate prose.",
+    parameters: Type.Object({
+      state_json: Type.String({
+        description: "JSON object of state Jev should judge (no secrets).",
+      }),
+      questions_json: Type.String({
+        description:
+          'JSON object of questions, e.g. {"ok":{"type":"noul","instructions":"..."}} or a Choice with criteria including other/none.',
+      }),
+    }),
+    async execute(_id, params) {
+      let state: unknown = {};
+      let questions: Record<string, unknown> = {};
+      try {
+        state = JSON.parse(String(params.state_json ?? "{}"));
+      } catch {
+        return {
+          content: [{ type: "text", text: "state_json is not valid JSON" }],
+        };
+      }
+      try {
+        questions = JSON.parse(String(params.questions_json ?? "{}")) as Record<
+          string,
+          unknown
+        >;
+      } catch {
+        return {
+          content: [{ type: "text", text: "questions_json is not valid JSON" }],
+        };
+      }
+      const result = await askJev({ state, questions });
+      return { content: [{ type: "text", text: formatJevAskResult(result) }] };
+    },
+  });
+
   pi.on("tool_call", async (event, ctx) => {
     const input = asToolCall(
       event as { toolName: string; input: Record<string, unknown> },
@@ -136,7 +180,7 @@ export default function jevPiSpecialist(pi: ExtensionAPI): void {
         /* suggestion is ignorable */
       }
     }
-    if (!extra) return;
+    extra += JEV_TOOL_HINT;
     return { systemPrompt: event.systemPrompt + extra };
   });
 
@@ -146,8 +190,8 @@ export default function jevPiSpecialist(pi: ExtensionAPI): void {
       const key = apiKeyFromEnv();
       ctx.ui.notify(
         key
-          ? "Jev specialist: key present. Unvouched bash/write/edit are gated; each turn is routed (simple|jev_specialist|coding|ask)."
-          : "Jev specialist: no TYPESAFE_API_KEY; unvouched calls fail closed; router stays off.",
+          ? "Jev specialist: key present. jev_ask is available. Unvouched bash/write/edit are gated; each turn is routed."
+          : "Jev specialist: no TYPESAFE_API_KEY; jev_ask and unvouched calls fail closed.",
         key ? "info" : "warning",
       );
     },

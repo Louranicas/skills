@@ -34,6 +34,10 @@ Fan-out independent questions in one request. Always include none/other on Choic
 Two-pass, ignorable: rank the roster + need-skill Nouls, then re-read the
 top 3. Mean of three gates (threshold 0.30); invert `prose_suffices` only.
 
+## jev_ask tool
+
+Call `jev_ask` with JSON `state` and a `questions` object of Noul/Choice/Score. Fan-out in one request. Always include none/other on Choice. Missing `TYPESAFE_API_KEY` fails closed.
+
 ## Task / model router
 
 One Choice over `simple` / `jev_specialist` / `coding` / `ask` / `other`. Trivial work stays on a cheap lane. Do not spawn an advanced agent for it. See `extensions/jev-pi-specialist/src/router.ts`.

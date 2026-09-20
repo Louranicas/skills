@@ -32,6 +32,19 @@ declare module "@earendil-works/pi-coding-agent" {
     ): void;
     on(event: string, handler: (...args: never[]) => unknown): void;
     appendEntry(customType: string, data?: unknown): void;
+    registerTool(def: {
+      name: string;
+      label?: string;
+      description: string;
+      parameters: unknown;
+      execute: (
+        toolCallId: string,
+        params: Record<string, unknown>,
+        signal: AbortSignal,
+        onUpdate: unknown,
+        ctx: ExtensionContext,
+      ) => Promise<{ content: Array<{ type: "text"; text: string }> }>;
+    }): void;
     registerCommand(
       name: string,
       def: {
