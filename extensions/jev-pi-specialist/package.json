@@ -1,0 +1,21 @@
+{
+  "name": "jev-pi-specialist",
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "Rules-first Jev tool gate for Pi (bash/write/edit), two-pass skill suggestion, and a labeled threshold harness.",
+  "type": "module",
+  "keywords": ["pi-package", "pi-extension", "typesafe", "jev"],
+  "files": ["src", "fixtures", "README.md"],
+  "engines": { "node": ">=22" },
+  "pi": {
+    "extensions": ["./src/index.ts"]
+  },
+  "scripts": {
+    "test": "node --experimental-strip-types --test test/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "calibrate": "node --experimental-strip-types scripts/calibrate.ts"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "items": [
+    {
+      "id": "correct-typesafe-workflow",
+      "gold": "typesafe-ai",
+      "request": "Design a TypeSafe/Jev System One workflow in code that routes support tickets with a Choice and a Noul review gate."
+    },
+    {
+      "id": "correct-pptx",
+      "gold": "pptx",
+      "request": "Build a pitch deck skeleton as a .pptx using our firm-template.pptx."
+    },
+    {
+      "id": "wrong-load-ts-types",
+      "gold": null,
+      "request": "Convert this JSON payload into TypeScript interfaces and a Zod schema."
+    },
+    {
+      "id": "none-monad",
+      "gold": null,
+      "request": "Explain what a monad is, with a couple of examples in prose."
+    },
+    {
+      "id": "none-trello",
+      "gold": null,
+      "request": "Add these three cards to our Trello backlog."
+    }
+  ]
+}
